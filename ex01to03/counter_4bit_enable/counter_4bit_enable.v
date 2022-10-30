@@ -1,5 +1,5 @@
 module counter_4bit_enable (Clk, EN, RSTB, Q);
-    input Clk, EN, RST;
+    input Clk, EN, RSTB;
     output [3:0] Q;
     wire [3:0] Q;
     reg [3:0] Count;

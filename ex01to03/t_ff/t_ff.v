@@ -1,4 +1,4 @@
-module t_ff (Clk, T);
+module t_ff (Clk, T, Q);
     input Clk, T;
     output Q;
     reg Q;

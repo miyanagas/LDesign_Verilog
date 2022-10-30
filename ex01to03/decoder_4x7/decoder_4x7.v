@@ -1,6 +1,7 @@
 module decoder_4x7 (switch, display);
     input [3:0] switch;
     output [6:0] display;
+	 reg [6:0] display;
 
     always @(switch) begin
         case (switch)
@@ -10,7 +11,7 @@ module decoder_4x7 (switch, display);
             4'b0011: display = 7'b0110000; /* 3 */
             4'b0100: display = 7'b0011001; /* 4 */
             4'b0101: display = 7'b0010010; /* 5 */
-            4'b0110: display = 7'b0000010: /* 6 */
+            4'b0110: display = 7'b0000010; /* 6 */
             4'b0111: display = 7'b1011001; /* 7 */
             4'b1000: display = 7'b0000000; /* 8 */
             4'b1001: display = 7'b0010000; /* 9 */
@@ -20,7 +21,6 @@ module decoder_4x7 (switch, display);
             4'b1101: display = 7'b0100001; /* D */
             4'b1110: display = 7'b0000110; /* E */
             4'b1111: display = 7'b0001110; /* F */
-            default: display = 7'bxxxxxxx;
         endcase
     end
 endmodule
