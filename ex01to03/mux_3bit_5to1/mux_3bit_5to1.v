@@ -1,6 +1,4 @@
-module mux_3bit_5to1 (
-    I0, I1, I2, I3, I4, S, O
-);
+module mux_3bit_5to1 (I0, I1, I2, I3, I4, S, O);
     input [2:0] I0, I1, I2, I3, I4, S;
     output [2:0] O;
 
@@ -17,6 +15,7 @@ module mux_3bit_5to1 (
                 3'b010: out = i2;
                 3'b011: out = i3;
                 3'b100: out = i4;
+                default: out = 3'bxxx;
             endcase
             mux_5to1_func = out;
         end

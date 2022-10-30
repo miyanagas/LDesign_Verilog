@@ -9,13 +9,13 @@ module decoder_to7 (Clk, I, Resetn, Q);
     reg [3:0] cur_st, next_st;
 
     assign Q =
-        (cur_st == S3) ? 7'b1110111 : (
-        (cur_st == S4) ? 7'b1111100 : (
-        (cur_st == S7) ? 7'b0111001 : (
-        (cur_st == S8) ? 7'b1011110 : (
-        (cur_st == S9) ? 7'b1111001 : (
-        (cur_st == S11) ? 7'b1110001 : (
-        (cur_st == S12) ? 7'b0001000 : 7'b0000000))))));
+        (cur_st == S3) ? 7'b0001000 : (
+        (cur_st == S4) ? 7'b0000011 : (
+        (cur_st == S7) ? 7'b1000110 : (
+        (cur_st == S8) ? 7'b0100001 : (
+        (cur_st == S9) ? 7'b0000110 : (
+        (cur_st == S11) ? 7'b0001110 : (
+        (cur_st == S12) ? 7'b1110111 : 7'b1111111 ))))));
 
     always @(posedge Clk) begin
         if (!Resetn) begin
@@ -28,13 +28,13 @@ module decoder_to7 (Clk, I, Resetn, Q);
 
     always @(cur_st or I) begin
         case (cur_st)
-            S0: next_st <= (I) ? S2 : S1;
-            S1: next_st <= (I) ? S4 : S3;
-            S2: next_st <= (I) ? S6 : S5;
-            S5: next_st <= (I) ? S8 : S7;
-            S6: next_st <= (I) ? S10 : S9;
-            S10: next_st <= (I) ? S12 : S11;
-            default: next_st <= (I) ? S2: S1;
+            S0: next_st = (I) ? S2 : S1;
+            S1: next_st = (I) ? S4 : S3;
+            S2: next_st = (I) ? S6 : S5;
+            S5: next_st = (I) ? S8 : S7;
+            S6: next_st = (I) ? S10 : S9;
+            S10: next_st = (I) ? S12 : S11;
+            default: next_st = (I) ? S2 : S1;
         endcase
     end
 endmodule
