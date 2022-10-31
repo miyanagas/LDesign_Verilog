@@ -1,7 +1,7 @@
 module decoder_4x7 (switch, display);
     input [3:0] switch;
     output [6:0] display;
-	 reg [6:0] display;
+	reg [6:0] display;
 
     always @(switch) begin
         case (switch)
