@@ -19,8 +19,7 @@ module full_adder (A, B, Cin, S, Cout);
     input A, B, Cin;
     output S, Cout;
 
-    assign S = (A ^ B) ^ Cin;
-    assign Cout = (B & Cin) | (A & (B | Cin));
+    assign {Cout, S} = A + B + Cin;
 endmodule
 
 module addsub (A, Sin, Mode, Sout, OF);
@@ -40,8 +39,6 @@ module addsub (A, Sin, Mode, Sout, OF);
     full_adder fa6(a[6], Sin[6], c[5], Sout[6], c[6]);
     full_adder fa7(a[7], Sin[7], c[6], Sout[7], c[7]);
     assign OF = ((a[7] == Sin[7]) && (Sout[7] != a[7])) ? 1'b1 : 1'b0;
-    //assign Sout = (Mode) ? Sin - A : Sin + A;
-    //assign OF = ((A[7] == Sin[7]) && (Sout[7] != A[7])) ? 1'b1 : 1'b0;
 endmodule
 
 module addsub_8bit (Clk, A, Mode, Resetn, S, OF);
