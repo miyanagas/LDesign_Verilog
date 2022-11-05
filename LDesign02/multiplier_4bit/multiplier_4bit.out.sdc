@@ -1,4 +1,4 @@
-## Generated SDC file "addsub_8bit.out.sdc"
+## Generated SDC file "multiplier_4bit.out.sdc"
 
 ## Copyright (C) 2020  Intel Corporation. All rights reserved.
 ## Your use of Intel Corporation's design tools, logic functions 
@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition"
 
-## DATE    "Sat Nov 05 16:26:41 2022"
+## DATE    "Sat Nov 05 18:46:05 2022"
 
 ##
 ## DEVICE  "5CSEMA5F31C6"
