@@ -29,7 +29,7 @@ module addsub (A, B, MODE, S, OF);
   output OF;
   wire [7:0] A_, Carry;
 
-  assign A_ = (MODE) ? ~A + 1 : A;
+  assign A_ = (MODE) ? ~A + 8'b0000_0001 : A;
   full_adder fa0(A_[0], B[0], 1'b0, S[0], Carry[0]);
   full_adder fa1(A_[1], B[1], Carry[0], S[1], Carry[1]);
   full_adder fa2(A_[2], B[2], Carry[1], S[2], Carry[2]);
