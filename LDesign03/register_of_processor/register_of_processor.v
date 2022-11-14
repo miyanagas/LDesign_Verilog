@@ -4,7 +4,7 @@ module register (Clk, D, EN, Resetn, Q);
     output [7:0] Q;
     reg [7:0] Q;
 
-    always @(posedge Clk) begin
+    always @(posedge Clk or negedge Resetn) begin
         if (!Resetn) begin
             Q <= 0;
         end
