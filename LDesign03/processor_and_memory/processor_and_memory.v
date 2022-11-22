@@ -198,11 +198,11 @@ module control_unit (Clk, Run, IR, Resetn, R0in, R1in, R2in, R3in, Ain, Gin, IRi
 
 endmodule
 
-module processor (Clk, Run, DIN, Resetn, OUT_IR, OUT_R0, OUT_R1, OUT_R2, OUT_R3, OUT_A, OUT_G, OUT_MUX, Bus, R0in, R1in, R2in, R3in, Ain, Gin, IRin, R0out, R1out, R2out, R3out, Gout, DINout, Done);
+module processor (Clk, Run, DIN, Resetn, OUT_IR, OUT_R0, OUT_R1, OUT_R2, OUT_R3, Bus, Done);
     input Clk, Run, Resetn;
     input [7:0] DIN;
-    output R0in, R1in, R2in, R3in, Ain, Gin, IRin, R0out, R1out, R2out, R3out, Gout, DINout, Done;
-    output [7:0] OUT_R0, OUT_R1, OUT_R2, OUT_R3, OUT_A, OUT_G, OUT_MUX, Bus;
+    output Done;
+    output [7:0] OUT_R0, OUT_R1, OUT_R2, OUT_R3, Bus;
 	output[6:0] OUT_IR;
     wire R0in, R1in, R2in, R3in, Ain, Gin, IRin, R0out, R1out, R2out, R3out, Gout, DINout, Mode;
     wire [6:0] IN_IR, OUT_IR;
@@ -225,4 +225,61 @@ module processor (Clk, Run, DIN, Resetn, OUT_IR, OUT_R0, OUT_R1, OUT_R2, OUT_R3,
     assign IN_R2 = OUT_MUX;
     assign IN_R3 = OUT_MUX;
     assign Bus = OUT_MUX;
+endmodule
+
+module memory (Clk, addr, data);
+    input Clk;
+    input [7:0] addr;
+    output [7:0] data;
+    reg [7:0] data;
+
+    always @(posedge Clk) begin
+        case (addr)
+            8'b0000_0000: data = 8'b0001_0000;
+            8'b0000_0001: data = 8'b0000_0101;
+            8'b0000_0010: data = 8'b0000_0100;
+            8'b0000_0011: data = 8'b0010_0001;
+            8'b0000_0100: data = 8'b0011_0000;
+            default: data = 8'bxxxx_xxxx;
+        endcase
+    end
+endmodule
+
+module counter (Clk, Resetn, Q);
+    input Clk, Resetn;
+    output [7:0] Q;
+    wire [7:0] Q;
+    reg [7:0] Count;
+
+    assign Q = Count;
+
+    always @(posedge Clk or negedge Resetn) begin
+        if (!Resetn) begin
+            Count <= 0;
+        end
+        else begin
+            Count <= Count + 8'b0000_0001;
+        end
+    end
+endmodule
+
+module processor_and_memory (MClk, PClk, Resetn, Run, Done, Bus, R0, R1, R2, R3, IR, Addr, Data);
+    input MClk, PClk, Resetn, Run;
+    output Done;
+    output [7:0] Bus, R0, R1, R2, R3, Addr, Data;
+    output [6:0] IR;
+    wire [7:0] Addr, OUT_R0, OUT_R1, OUT_R2, OUT_R3, OUT_Bus;
+    wire [6:0] OUT_IR;
+    wire OUT_Done;
+
+    counter Counter(MClk, Resetn, Addr);
+    memory Memory(MClk, Addr, Data);
+    processor Processor(PClk, Run, Data, Resetn, OUT_IR, OUT_R0, OUT_R1, OUT_R2, OUT_R3, OUT_Bus, OUT_Done);
+    assign Done = OUT_Done;
+    assign Bus = OUT_Bus;
+    assign IR = OUT_IR;
+    assign R0 = OUT_R0;
+    assign R1 = OUT_R1;
+    assign R2 = OUT_R2;
+    assign R3 = OUT_R3;
 endmodule
